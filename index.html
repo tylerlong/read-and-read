@@ -2,8 +2,53 @@
 <html>
   <head></head>
   <body>
+    <button onclick="read()" style="width:128px;height:32px;">Speak!</button>
+    <hr/>
+    <textarea rows="30" cols="60" id="presentation">
+Hello everyone. 
+My name is Liu Yao Yang.
+I am five years old.
+I am from Ta Pu Da Di Kindergarten, Class YaYa.
+I have many tickets.
+I want to buy a fish.
+This is my aquarium.
+There are two fish inside.
+I like my fish very much.
+I feed them everyday.
+I like ABC Mouse very much.
+I study English very hard.
+Now a story for you.
+Hats
+We like hats.
+It is cold.
+I like my snow hat.
+It is wet.
+I like my rain hat.
+It is hot.
+I like my sun hat.
+It is windy.
+I like my cap.
+That's all.
+Thank you.
+    </textarea>
     <script>
-      console.log(window.speechSynthesis.getVoices())
+      let voices = []
+      window.speechSynthesis.getVoices()
+      window.speechSynthesis.onvoiceschanged = function() {
+        voices = window.speechSynthesis.getVoices()
+      };
+
+      function read() {
+        const presentation = document.getElementById('presentation').value.trim()
+        for(const line of presentation.split('\n')) {
+          console.log(line)
+          const msg = new SpeechSynthesisUtterance()
+          msg.rate = 0.6
+          msg.voice = voices[48]
+          msg.text = line
+          speechSynthesis.speak(msg)
+        }
+      }
     </script>
   </body>
 </html>
