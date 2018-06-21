@@ -47,13 +47,13 @@ Thank you.
         readLine()
       }
 
+      const cache = []
       function readLine() {
         if(lines.length === 0) {
           return
         }
         const line = lines.shift()
         console.log(line)
-        console.log(lines.length)
         const msg = new SpeechSynthesisUtterance()
         msg.rate = 0.6
         msg.voice = voices.filter(voice => false
@@ -66,8 +66,11 @@ Thank you.
         msg.text = line
         speechSynthesis.speak(msg)
         msg.onend = function() {
-          console.log('onend')
           readLine()
+        }
+        cache.push(msg) // avoid GC
+        while(cache.length > 3) {
+          cache.shift()
         }
       }
     </script>
